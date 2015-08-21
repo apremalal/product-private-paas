@@ -22,26 +22,11 @@ prgdir=`dirname "$0"`
 script_path=`cd "$prgdir"; pwd`
 
 wso2_ppaas_version="4.1.0-SNAPSHOT"
-wso2_base_image_version="4.1.1"
-configurator_path=`cd ${script_path}/../../../components/org.wso2.ppaas.configurator/; pwd`
 clean=false
 
-if [ "$1" = "clean" ]; then
-   clean=true
-fi
-
-if ${clean} ; then
-   echo "----------------------------------"
-   echo "Building configurator"
-   echo "----------------------------------"
-   pushd ${configurator_path}
-   mvn clean install                                                                                      
-   cp -v target/ppaas-configurator-${wso2_ppaas_version}.zip ${script_path}/packages/
-   popd
-fi
-
 echo "----------------------------------"
-echo "Building base docker image"
+echo "Building tomcat docker image"
 echo "----------------------------------"
-docker build -t wso2/base-image:${wso2_base_image_version} .
-echo "Base docker image built successfully"
+docker build -t wso2/tomcat:1.0.0 .
+
+echo "docker image built successfully."
